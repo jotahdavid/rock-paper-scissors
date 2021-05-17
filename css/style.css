@@ -33,9 +33,10 @@ header h1.title {
   color: #fff;
 }
 
-/* Game =================================== */
+/* Question and Choices =================================== */
 section .question {
-  width: 100%;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .question h2 {
@@ -54,15 +55,18 @@ section .question {
   padding: 5px;
 }
 
-.choices {
+.choices-container {
   margin-top: 8rem;
 
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  gap: 5rem;
   flex-wrap: wrap;
 }
 
-.choices > div {
+.choices {
+  cursor: pointer;
+
   padding: 2rem;
   border-radius: 50%;
   background-color: var(--primary-color);
