@@ -1,84 +1,65 @@
 const RockPaperScissors = {
-  choices: [ "Rock", "Paper", "Scissors" ],
+  winningCombinations: [ "Rock > Scissors", "Scissors > Paper", "Paper > Rock" ],
   computerChoice: null,
   userChoice: null,
   
   getComputerChoice() {
+    const choiceOptions = [ "Rock", "Paper", "Scissors" ];
     const choice = Math.floor(Math.random() * 3);
-    this.computerChoice = this.choices[choice];
+
+    this.computerChoice = choiceOptions[choice];
   },
   getUserChoice(event) {
-    event.path.forEach(({ dataset }) => {
-      if(dataset && dataset.hasOwnProperty("choice")) this.userChoice = dataset.choice;
-    });
+    const elementChosen = event.path.filter(({ dataset }) => dataset && dataset.hasOwnProperty("choice"));
+    const choice = elementChosen[0].dataset.choice;
+
+    this.userChoice = choice;
   },
   getWinner() {
-    switch(this.userChoice) {
-      case "Rock":
-        if(this.computerChoice === "Paper") {
-          return "lose";
-        } else if(this.computerChoice === "Scissors") {
-          return "win";
-        } else {
-          return "draw";
-        }
-
-      case "Paper":
-        if(this.computerChoice === "Scissors") {
-          return "lose";
-        } else if(this.computerChoice === "Rock") {
-          return "win";
-        } else {
-          return "draw";
-        }
-
-      case "Scissors":
-        if(this.computerChoice === "Rock") {
-          return "lose";
-        } else if(this.computerChoice === "Paper") {
-          return "win";
-        } else {
-          return "draw";
-        }
+    if(this.winningCombinations.includes(`${this.userChoice} > ${this.computerChoice}`)) {
+      return "win";
+    } else if(this.winningCombinations.includes(`${this.computerChoice} > ${this.userChoice}`)) {
+      return "lose";
+    } else {
+      return "draw";
     }
+  },
+  createComputerChoiceElement(element) {
+    const choiceElement = element.cloneNode(true);
+    choiceElement.classList.add("computer-choice");
+
+    const choicesContainer = document.querySelector(".choices-container");
+    choicesContainer.appendChild(choiceElement);
   },
   showWinner() {
     const roundEndStatus = this.getWinner();
 
-    console.log(this.userChoice + " vs. " + this.computerChoice);
-
     const showStatus = document.querySelector(".question h2");
     showStatus.innerText = `You ${roundEndStatus.toUpperCase()}`;
     
-    const getChoicesElements = document.querySelectorAll(".choices");
-    getChoicesElements.forEach(element => {
-      const choiceData = element.dataset.choice;
+    const choicesElements = document.querySelectorAll(".choices");
+    choicesElements.forEach(element => {
+      const dataChoice = element.dataset.choice;
 
-      if(this.userChoice !== choiceData && this.computerChoice !== choiceData) {
+      const theElementWasSelected = this.userChoice !== dataChoice && this.computerChoice !== dataChoice;
+      if(theElementWasSelected) {
         element.classList.add("not-selected");
       } else {
         element.classList.add("selected");
       }
 
-      if(this.userChoice === choiceData) {
-        if(roundEndStatus === "draw") {
-          const div = element.cloneNode(true);
-          div.classList.add("computer-choice");
-
-          const getChoicesContainer = document.querySelector(".choices-container");
-          getChoicesContainer.appendChild(div);
-        }
-        
+      if(this.userChoice === dataChoice) {
+        if(roundEndStatus === "draw") this.createComputerChoiceElement(element);
         element.classList.add("user-choice");
-      } else if(this.computerChoice === choiceData) {
+
+      } else if(this.computerChoice === dataChoice) {
         element.classList.add("computer-choice");
       }
-
     });
   },
   removeEvents() {
-    const getChoicesElements = document.querySelectorAll(".choices");
-    getChoicesElements.forEach(element => {
+    const choicesElements = document.querySelectorAll(".choices");
+    choicesElements.forEach(element => {
       element.onclick = "";
     });
   },
