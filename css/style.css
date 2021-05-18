@@ -33,7 +33,7 @@ header h1.title {
   color: #fff;
 }
 
-/* Question and Choices =================================== */
+/* Question =================================== */
 section .question {
   width: 90%;
   margin: 0 auto;
@@ -53,8 +53,11 @@ section .question {
   max-width: 600px;
   margin: 0 auto;
   padding: 5px;
+
+  animation: appear 500ms forwards;
 }
 
+/* Game =================================== */
 .choices-container {
   margin-top: 8rem;
 
@@ -73,6 +76,36 @@ section .question {
   background-color: var(--primary-color);
 
   box-shadow: 0.1rem 0.3rem 5px rgba(0, 0, 0, 0.3);
+}
+
+.choices[data-animation=first-appear] {
+  animation: appear-and-rotate 1000ms forwards;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: scale(0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes appear-and-rotate {
+  from {
+    opacity: 0;
+    transform: scale(0, 0) rotate(-180deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1, 1) rotate(0deg);
+  }
+}
+
+.choices[data-choice=Rock] > img {
+  transform: rotate(-90deg);
 }
 
 .choices.not-selected {
