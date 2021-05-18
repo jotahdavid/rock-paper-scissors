@@ -7,55 +7,85 @@ const RockPaperScissors = {
     const choice = Math.floor(Math.random() * 3);
     this.computerChoice = this.choices[choice];
   },
-  getUserChoice(target) {
-    this.userChoice = this.choices[target];
+  getUserChoice(event) {
+    event.path.forEach(({ dataset }) => {
+      if(dataset && dataset.hasOwnProperty("choice")) this.userChoice = dataset.choice;
+    });
   },
   getWinner() {
     switch(this.userChoice) {
       case "Rock":
         if(this.computerChoice === "Paper") {
-          console.log("You LOSE!");
+          return "lose";
         } else if(this.computerChoice === "Scissors") {
-          console.log("You WIN!");
+          return "win";
         } else {
-          console.log("DRAW!");
+          return "draw";
         }
-        break;
 
       case "Paper":
         if(this.computerChoice === "Scissors") {
-          console.log("You LOSE!");
+          return "lose";
         } else if(this.computerChoice === "Rock") {
-          console.log("You WIN!");
+          return "win";
         } else {
-          console.log("DRAW!");
+          return "draw";
         }
-        break;
 
       case "Scissors":
         if(this.computerChoice === "Rock") {
-          console.log("You LOSE!");
+          return "lose";
         } else if(this.computerChoice === "Paper") {
-          console.log("You WIN!");
+          return "win";
         } else {
-          console.log("DRAW!");
+          return "draw";
         }
-        break;
     }
   },
-  init(index) {
+  showWinner() {
+    const roundEndStatus = this.getWinner();
+
+    console.log(this.userChoice + " vs. " + this.computerChoice);
+
+    const showStatus = document.querySelector(".question h2");
+    showStatus.innerText = `You ${roundEndStatus.toUpperCase()}`;
+    
+    const getChoicesElements = document.querySelectorAll(".choices");
+    getChoicesElements.forEach(element => {
+      const choiceData = element.dataset.choice;
+
+      if(this.userChoice !== choiceData && this.computerChoice !== choiceData) {
+        element.classList.add("not-selected");
+      } else {
+        element.classList.add("selected");
+      }
+
+      if(this.userChoice === choiceData) {
+        if(roundEndStatus === "draw") {
+          const div = element.cloneNode(true);
+          div.classList.add("computer-choice");
+
+          const getChoicesContainer = document.querySelector(".choices-container");
+          getChoicesContainer.appendChild(div);
+        }
+        
+        element.classList.add("user-choice");
+      } else if(this.computerChoice === choiceData) {
+        element.classList.add("computer-choice");
+      }
+
+    });
+  },
+  removeEvents() {
+    const getChoicesElements = document.querySelectorAll(".choices");
+    getChoicesElements.forEach(element => {
+      element.onclick = "";
+    });
+  },
+  play(event) {
     this.getComputerChoice();
-    this.getUserChoice(index);
-    console.log(`${this.userChoice} vs. ${this.computerChoice}`);
-    this.getWinner();
+    this.getUserChoice(event);
+    this.showWinner();
+    this.removeEvents();
   },
 }
-
-
-window.addEventListener('load', () => {
-  const getChoices = document.querySelectorAll('.choices');
-
-  getChoices.forEach((choice, index) => {
-    choice.addEventListener('click', () => RockPaperScissors.init(index));
-  });
-});

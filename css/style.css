@@ -66,10 +66,60 @@ section .question {
 
 .choices {
   cursor: pointer;
+  user-select: none;
 
   padding: 2rem;
   border-radius: 50%;
   background-color: var(--primary-color);
 
   box-shadow: 0.1rem 0.3rem 5px rgba(0, 0, 0, 0.3);
+}
+
+.choices.not-selected {
+  display: none;
+}
+
+.choices.selected.user-choice {
+  position: relative;
+  cursor: default;
+  order: -1;
+}
+
+.choices.selected.user-choice::before {
+  content: "You";
+  display: block;
+  width: 100%;
+  height: 50px;
+
+  position: absolute;
+  top: -50px;
+  left: 0;
+
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #fff;
+}
+
+.choices.selected.computer-choice {
+  position: relative;
+  cursor: default;
+}
+
+.choices.selected.computer-choice::before {
+  content: "Computer";
+  display: block;
+  width: 100%;
+  height: 50px;
+
+  position: absolute;
+  top: -50px;
+  left: 0;
+
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #fff;
 }
