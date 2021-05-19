@@ -46,20 +46,23 @@ section .question {
   color: white;
   text-shadow: 0.1rem 0.1rem 5px rgba(0, 0, 0, 0.4);
   
-  box-shadow: 0.1rem 0.3rem 5px rgba(0, 0, 0, 0.3);
-  
   background-color: var(--primary-color);
   border-radius: 10px;
   max-width: 600px;
   margin: 0 auto;
   padding: 5px;
+  
+  box-shadow: 0.1rem 0.3rem 5px rgba(0, 0, 0, 0.3);
+}
 
+.question[data-animation=appear] {
   animation: appear 500ms forwards;
 }
 
-/* Game =================================== */
+/* Choice Options =================================== */
 .choices-container {
   margin-top: 8rem;
+  padding-bottom: 10rem;
 
   display: flex;
   justify-content: center;
@@ -78,10 +81,72 @@ section .question {
   box-shadow: 0.1rem 0.3rem 5px rgba(0, 0, 0, 0.3);
 }
 
-.choices[data-animation=first-appear] {
+.choices[data-animation=appear-and-rotate] {
   animation: appear-and-rotate 1000ms forwards;
 }
 
+.choices[data-choice=Rock] > img {
+  transform: rotate(-90deg);
+}
+
+.choices.user-choice {
+  position: relative;
+  cursor: default;
+  order: -1;
+
+  animation: left-to-right .5s forwards;
+}
+
+.choices.user-choice::before {
+  content: "You";
+  display: block;
+  width: 100%;
+  height: 50px;
+
+  position: absolute;
+  top: -50px;
+  left: 0;
+
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #fff;
+}
+
+.choices.computer-choice {
+  position: relative;
+  cursor: default;
+
+  animation: right-to-left .5s forwards;
+}
+
+.choices.computer-choice::before {
+  content: "Computer";
+  display: block;
+  width: 100%;
+  height: 50px;
+
+  position: absolute;
+  top: -50px;
+  left: 0;
+
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #fff;
+}
+
+.choices[data-animation=left-to-right] {
+  animation: left-to-right 600ms forwards;
+}
+
+.choices[data-animation=right-to-left] {
+  animation: right-to-left 600ms forwards;
+}
+
+/* Keyframes =================================== */
 @keyframes appear {
   from {
     opacity: 0;
@@ -104,55 +169,24 @@ section .question {
   }
 }
 
-.choices[data-choice=Rock] > img {
-  transform: rotate(-90deg);
+@keyframes left-to-right {
+  from {
+    opacity: 0;
+    transform: translateX(-20vw);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-.choices.not-selected {
-  display: none;
-}
-
-.choices.selected.user-choice {
-  position: relative;
-  cursor: default;
-  order: -1;
-}
-
-.choices.selected.user-choice::before {
-  content: "You";
-  display: block;
-  width: 100%;
-  height: 50px;
-
-  position: absolute;
-  top: -50px;
-  left: 0;
-
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 2rem;
-  font-weight: 400;
-  color: #fff;
-}
-
-.choices.selected.computer-choice {
-  position: relative;
-  cursor: default;
-}
-
-.choices.selected.computer-choice::before {
-  content: "Computer";
-  display: block;
-  width: 100%;
-  height: 50px;
-
-  position: absolute;
-  top: -50px;
-  left: 0;
-
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 2rem;
-  font-weight: 400;
-  color: #fff;
+@keyframes right-to-left {
+  from {
+    opacity: 0;
+    transform: translateX(20vw);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

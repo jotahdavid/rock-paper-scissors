@@ -2,7 +2,18 @@ const RockPaperScissors = {
   winningCombinations: [ "Rock > Scissors", "Scissors > Paper", "Paper > Rock" ],
   computerChoice: null,
   userChoice: null,
-  
+  choicesBackup: {},
+
+  getChoicesBackup() {
+    this.choicesBackup = {
+      Rock: this.getChoicesElements()[0].cloneNode(true),
+      Paper: this.getChoicesElements()[1].cloneNode(true),
+      Scissors: this.getChoicesElements()[2].cloneNode(true),
+    }
+  },
+  getChoicesElements() {
+    return document.querySelectorAll(".choices");
+  },
   getComputerChoice() {
     const choiceOptions = [ "Rock", "Paper", "Scissors" ];
     const choice = Math.floor(Math.random() * 3);
@@ -24,49 +35,48 @@ const RockPaperScissors = {
       return "draw";
     }
   },
-  createComputerChoiceElement(element) {
-    const choiceElement = element.cloneNode(true);
-    choiceElement.classList.add("computer-choice");
-
+  removeChilds() {
     const choicesContainer = document.querySelector(".choices-container");
-    choicesContainer.appendChild(choiceElement);
+    while(choicesContainer.lastChild) {
+      choicesContainer.removeChild(choicesContainer.lastChild);
+    }
+  },
+  createOptionsChosen(element, cssClass, animationName) {
+    const choicesContainer = document.querySelector(".choices-container");
+    element.classList.add(cssClass);
+    element.setAttribute("data-animation", animationName);
+    choicesContainer.appendChild(element);
   },
   showWinner() {
-    const roundEndStatus = this.getWinner();
-
     const showStatus = document.querySelector(".question h2");
-    showStatus.innerText = `You ${roundEndStatus.toUpperCase()}`;
-    
-    const choicesElements = document.querySelectorAll(".choices");
-    choicesElements.forEach(element => {
-      const dataChoice = element.dataset.choice;
-
-      const theElementWasSelected = this.userChoice !== dataChoice && this.computerChoice !== dataChoice;
-      if(theElementWasSelected) {
-        element.classList.add("not-selected");
-      } else {
-        element.classList.add("selected");
-      }
-
-      if(this.userChoice === dataChoice) {
-        if(roundEndStatus === "draw") this.createComputerChoiceElement(element);
-        element.classList.add("user-choice");
-
-      } else if(this.computerChoice === dataChoice) {
-        element.classList.add("computer-choice");
-      }
-    });
+    showStatus.innerText = this.getWinner().toUpperCase();
   },
-  removeEvents() {
-    const choicesElements = document.querySelectorAll(".choices");
-    choicesElements.forEach(element => {
-      element.onclick = "";
+  showOptionsChosen() {
+    const userChoiceElement = this.choicesBackup[this.userChoice];
+    this.createOptionsChosen(userChoiceElement, "user-choice", "left-to-right");
+    
+    let computerChoiceElement = this.choicesBackup[this.computerChoice];
+    if(this.getWinner() === "draw") computerChoiceElement = computerChoiceElement.cloneNode(true);
+    this.createOptionsChosen(computerChoiceElement, "computer-choice", "right-to-left");
+  },
+  addEvents() {
+    this.getChoicesElements().forEach(element => {
+      element.onclick = this.play.bind(this);
     });
   },
   play(event) {
     this.getComputerChoice();
     this.getUserChoice(event);
     this.showWinner();
-    this.removeEvents();
+    this.removeChilds();
+    this.showOptionsChosen();
+  },
+  init() {
+    this.addEvents();
+    this.getChoicesBackup();
   },
 }
+
+window.addEventListener("load", () => {
+  RockPaperScissors.init();
+});
