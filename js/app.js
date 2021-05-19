@@ -72,9 +72,11 @@ const RockPaperScissors = {
   },
   showWinner() {
     this.html["textBox"].innerText = this.getWinner().toUpperCase();
+    this.html["textBox"].classList.add(this.getWinner());
   },
   showQuestion() {
     this.html["textBox"].innerText = "Which one do you choose?";
+    this.html["textBox"].classList.value = null;
   },
   showOptionsChosen() {
     const userChoiceElement = this.choicesBackup[this.userChoice];

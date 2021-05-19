@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css");
 
 /* Global =================================== */
 :root {
@@ -6,6 +7,7 @@
   --primary-color: #C1292E;
   --primary-color-hover: #a7262a;
   --secondary-color: #FFE74C;
+  --font-color: #fff;
 }
 
 * {
@@ -18,6 +20,8 @@
 body {
   height: 100vh;
   background-color: var(--bg-color);
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 /* Header =================================== */
@@ -27,11 +31,14 @@ header {
 }
 
 header h1.title {
+  max-width: 500px;
+  margin: 0 auto;
+
   font-size: 3rem;
-  font-weight: 500;
+  font-weight: 300;
   text-align: center;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--font-color);
 }
 
 /* Text Box =================================== */
@@ -44,7 +51,8 @@ section .text-box {
 
 .text-box h2 {
   font-size: 2rem;
-  font-weight: 400;
+  font-weight: 500;
+  text-transform: uppercase;
   text-align: center;
   color: white;
   text-shadow: 0.1rem 0.1rem 5px rgba(0, 0, 0, 0.4);
@@ -62,6 +70,19 @@ section .text-box {
   animation: appear 500ms forwards;
 }
 
+/* Round End Status =================================== */
+.text-box h2.win {
+  background-color: #147514;
+}
+
+.text-box h2.lose {
+  background-color: #860d11;
+}
+
+.text-box h2.draw {
+  background-color: #626262;
+}
+
 /* Choice Options =================================== */
 .choices-container {
   margin-top: 8rem;
@@ -69,8 +90,8 @@ section .text-box {
 
   display: flex;
   justify-content: center;
-  gap: 8rem;
-  flex-wrap: wrap;
+  /* align-items: center; */
+  gap: 6rem;
 }
 
 .choices {
@@ -120,7 +141,7 @@ section .text-box {
   text-transform: uppercase;
   font-size: 2rem;
   font-weight: 400;
-  color: #fff;
+  color: var(--font-color);
 }
 
 .choices.computer-choice {
@@ -130,7 +151,8 @@ section .text-box {
 
 .choices.computer-choice::before {
   content: "Computer";
-  display: block;
+  display: flex;
+  justify-content: center;
   width: 100%;
   height: 50px;
 
@@ -142,7 +164,7 @@ section .text-box {
   text-transform: uppercase;
   font-size: 2rem;
   font-weight: 400;
-  color: #fff;
+  color: var(--font-color);
 }
 
 .choices[data-animation=left-to-right] {
@@ -174,8 +196,8 @@ section .text-box {
   justify-content: center;
   align-items: center;
 
-  font-size: 1.5rem;
-  color: #fff;
+  font-size: 1.3rem;
+  color: var(--font-color);
 }
 
 .tooltip::before {
@@ -200,7 +222,6 @@ section .text-box {
   visibility: hidden;
 
   text-align: center;
-  padding-bottom: 10rem;
   user-select: none;
 }
 
@@ -213,15 +234,20 @@ section .text-box {
   background-color: var(--primary-color);
   border: none;
   border-radius: 10px;
-  color: #fff;
+  color: var(--font-color);
   padding: .6rem 1.8rem;
 
   box-shadow: 0.1rem 0.3rem 5px rgba(0, 0, 0, 0.3);
 }
 
+#play-again > button > i {
+  letter-spacing: 5px;
+}
+
 #play-again.show {
   opacity: 1;
   visibility: visible;
+  padding-bottom: 8rem;
   
   transition: opacity .5s .5s;
 }
@@ -235,6 +261,39 @@ section .text-box {
 #play-again.show button:hover {
   background-color: var(--primary-color-hover);
   transform: scale(1.1);
+}
+
+/* Media queries =================================== */
+@media (max-width: 800px) {
+  body {
+    overflow-y: auto;
+  }
+  header h1.title {
+    font-size: 2.5rem;
+  }
+  .text-box h2 {
+    font-size: 1.6rem;
+  }
+  .choices-container {
+    flex-wrap: wrap;
+    gap: 5rem;
+  }
+  .choices {
+    margin-bottom: 3.5rem;
+    padding: 1rem;
+  }
+  .choices.user-choice, .choices.computer-choice {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  .choices:hover.user-choice, .choices:hover.computer-choice {
+    background-color: var(--primary-color);
+    transform: scale(1);
+  }
+  .choices span {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 /* Keyframes =================================== */
