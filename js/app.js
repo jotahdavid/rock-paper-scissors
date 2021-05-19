@@ -1,24 +1,39 @@
 const RockPaperScissors = {
+  choiceOptions: [ "Rock", "Paper", "Scissors" ],
   winningCombinations: [ "Rock > Scissors", "Scissors > Paper", "Paper > Rock" ],
   computerChoice: null,
   userChoice: null,
   choicesBackup: {},
-
+  html: {
+    choicesContainer: document.querySelector(".choices-container"),
+    textBox: document.querySelector(".question h2"),
+    button: document.querySelector("#play-again"),
+  },
+  
+  addEvents() {
+    this.getChoicesElements().forEach(element => {
+      element.onclick = this.play.bind(this);
+    });
+  },
+  removeEvents() {
+    this.getChoicesElements().forEach(element => {
+      element.onclick = "";
+    });
+  },
   getChoicesBackup() {
-    this.choicesBackup = {
+    this.choicesBackup = { 
       Rock: this.getChoicesElements()[0].cloneNode(true),
       Paper: this.getChoicesElements()[1].cloneNode(true),
       Scissors: this.getChoicesElements()[2].cloneNode(true),
-    }
+    };
   },
   getChoicesElements() {
     return document.querySelectorAll(".choices");
   },
   getComputerChoice() {
-    const choiceOptions = [ "Rock", "Paper", "Scissors" ];
     const choice = Math.floor(Math.random() * 3);
 
-    this.computerChoice = choiceOptions[choice];
+    this.computerChoice = this.choiceOptions[choice];
   },
   getUserChoice(event) {
     const elementChosen = event.path.filter(({ dataset }) => dataset && dataset.hasOwnProperty("choice"));
@@ -36,20 +51,30 @@ const RockPaperScissors = {
     }
   },
   removeChilds() {
-    const choicesContainer = document.querySelector(".choices-container");
-    while(choicesContainer.lastChild) {
-      choicesContainer.removeChild(choicesContainer.lastChild);
+    while(this.html["choicesContainer"].lastChild) {
+      this.html["choicesContainer"].removeChild(this.html["choicesContainer"].lastChild);
     }
   },
   createOptionsChosen(element, cssClass, animationName) {
-    const choicesContainer = document.querySelector(".choices-container");
     element.classList.add(cssClass);
     element.setAttribute("data-animation", animationName);
-    choicesContainer.appendChild(element);
+    this.html["choicesContainer"].appendChild(element);
+  },
+  recreateOptions() {
+    this.choiceOptions.forEach(option => {
+      const choiceElement = this.choicesBackup[option];
+      for(let i = 1; i < choiceElement.classList.length; i++) {
+        choiceElement.classList.remove(choiceElement.classList[i]);
+      }
+      choiceElement.setAttribute("data-animation", "appear-and-rotate");
+      this.html["choicesContainer"].appendChild(this.choicesBackup[option]);
+    });
   },
   showWinner() {
-    const showStatus = document.querySelector(".question h2");
-    showStatus.innerText = this.getWinner().toUpperCase();
+    this.html["textBox"].innerText = this.getWinner().toUpperCase();
+  },
+  showQuestion() {
+    this.html["textBox"].innerText = "Which one do you choose?";
   },
   showOptionsChosen() {
     const userChoiceElement = this.choicesBackup[this.userChoice];
@@ -59,21 +84,33 @@ const RockPaperScissors = {
     if(this.getWinner() === "draw") computerChoiceElement = computerChoiceElement.cloneNode(true);
     this.createOptionsChosen(computerChoiceElement, "computer-choice", "right-to-left");
   },
-  addEvents() {
-    this.getChoicesElements().forEach(element => {
-      element.onclick = this.play.bind(this);
-    });
+  addPlayAgainButton() {
+    this.html["button"].classList.add("show");
+    this.html["button"].onclick = this.restart.bind(this);
+  },
+  removePlayAgainButton() {
+    this.html["button"].classList.remove("show");
+    this.html["button"].onclick = "";
   },
   play(event) {
     this.getComputerChoice();
     this.getUserChoice(event);
     this.showWinner();
+    this.removeEvents();
     this.removeChilds();
     this.showOptionsChosen();
+    this.addPlayAgainButton();
+  },
+  restart() {
+    this.removeChilds();
+    this.recreateOptions();
+    this.showQuestion();
+    this.removePlayAgainButton();
+    this.addEvents();
   },
   init() {
-    this.addEvents();
     this.getChoicesBackup();
+    this.addEvents();
   },
 }
 
