@@ -33,13 +33,13 @@ header h1.title {
   color: #fff;
 }
 
-/* Question =================================== */
-section .question {
+/* Text Box =================================== */
+section .text-box {
   width: 90%;
   margin: 0 auto;
 }
 
-.question h2 {
+.text-box h2 {
   font-size: 2rem;
   font-weight: 400;
   text-align: center;
@@ -55,14 +55,14 @@ section .question {
   box-shadow: 0.1rem 0.3rem 5px rgba(0, 0, 0, 0.3);
 }
 
-.question[data-animation=appear] {
+.text-box[data-animation=appear] {
   animation: appear 500ms forwards;
 }
 
 /* Choice Options =================================== */
 .choices-container {
   margin-top: 8rem;
-  padding-bottom: 10rem;
+  padding-bottom: 8rem;
 
   display: flex;
   justify-content: center;
@@ -144,6 +144,41 @@ section .question {
 
 .choices[data-animation=right-to-left] {
   animation: right-to-left 600ms forwards;
+}
+
+/* Buttons =================================== */
+#play-again {
+  opacity: 0;
+  visibility: hidden;
+
+  text-align: center;
+  padding-bottom: 10rem;
+}
+
+#play-again > button {
+  font-size: 1.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-shadow: 0.1rem 0.1rem 5px rgba(0, 0, 0, 0.4);
+
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  padding: .6rem 1.8rem;
+
+  box-shadow: 0.1rem 0.3rem 5px rgba(0, 0, 0, 0.3);
+}
+
+#play-again.show {
+  opacity: 1;
+  visibility: visible;
+  
+  transition: all .5s;
+}
+
+#play-again.show button {
+  cursor: pointer;
 }
 
 /* Keyframes =================================== */

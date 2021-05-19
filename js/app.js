@@ -6,7 +6,7 @@ const RockPaperScissors = {
   choicesBackup: {},
   html: {
     choicesContainer: document.querySelector(".choices-container"),
-    textBox: document.querySelector(".question h2"),
+    textBox: document.querySelector(".text-box h2"),
     button: document.querySelector("#play-again"),
   },
   
@@ -86,11 +86,11 @@ const RockPaperScissors = {
   },
   addPlayAgainButton() {
     this.html["button"].classList.add("show");
-    this.html["button"].onclick = this.restart.bind(this);
+    this.html["button"].children[0].onclick = this.restart.bind(this);
   },
   removePlayAgainButton() {
     this.html["button"].classList.remove("show");
-    this.html["button"].onclick = "";
+    this.html["button"].children[0].onclick = "";
   },
   play(event) {
     this.getComputerChoice();
