@@ -17,7 +17,7 @@ const RockPaperScissors = {
   },
   removeEvents() {
     this.getChoicesElements().forEach(element => {
-      element.onclick = "";
+      element.onclick = null;
     });
   },
   getChoicesBackup() {
@@ -90,7 +90,7 @@ const RockPaperScissors = {
   },
   removePlayAgainButton() {
     this.html["button"].classList.remove("show");
-    this.html["button"].children[0].onclick = "";
+    this.html["button"].children[0].onclick = null;
   },
   play(event) {
     this.getComputerChoice();

@@ -4,6 +4,7 @@
 :root {
   --bg-color: #3A2449;
   --primary-color: #C1292E;
+  --primary-color-hover: #a7262a;
   --secondary-color: #FFE74C;
 }
 
@@ -37,6 +38,8 @@ header h1.title {
 section .text-box {
   width: 90%;
   margin: 0 auto;
+
+  user-select: none;
 }
 
 .text-box h2 {
@@ -66,11 +69,13 @@ section .text-box {
 
   display: flex;
   justify-content: center;
-  gap: 5rem;
+  gap: 8rem;
   flex-wrap: wrap;
 }
 
 .choices {
+  position: relative;
+
   cursor: pointer;
   user-select: none;
 
@@ -79,10 +84,16 @@ section .text-box {
   background-color: var(--primary-color);
 
   box-shadow: 0.1rem 0.3rem 5px rgba(0, 0, 0, 0.3);
+  transition: transform .2s;
+}
+
+.choices:hover {
+  background-color: var(--primary-color-hover);
+  transform: scale(1.1);
 }
 
 .choices[data-animation=appear-and-rotate] {
-  animation: appear-and-rotate 1000ms forwards;
+  animation: appear-and-rotate 600ms;
 }
 
 .choices[data-choice=Rock] > img {
@@ -93,8 +104,6 @@ section .text-box {
   position: relative;
   cursor: default;
   order: -1;
-
-  animation: left-to-right .5s forwards;
 }
 
 .choices.user-choice::before {
@@ -117,8 +126,6 @@ section .text-box {
 .choices.computer-choice {
   position: relative;
   cursor: default;
-
-  animation: right-to-left .5s forwards;
 }
 
 .choices.computer-choice::before {
@@ -139,11 +146,52 @@ section .text-box {
 }
 
 .choices[data-animation=left-to-right] {
-  animation: left-to-right 600ms forwards;
+  animation: left-to-right 600ms;
 }
 
 .choices[data-animation=right-to-left] {
-  animation: right-to-left 600ms forwards;
+  animation: right-to-left 600ms;
+}
+
+/* Tooltip =================================== */
+.tooltip {
+  opacity: 0;
+  visibility: hidden;
+
+  position: absolute;
+  bottom: -3.5rem;
+  left: 0;
+  right: 0;
+  z-index: 10;
+
+  height: 2.5rem;
+  width: 8rem;
+  margin: 0 auto;
+  background-color: #000;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.tooltip::before {
+  content:  "";
+
+  position: absolute;
+  top: -1rem;
+  border-bottom: .5rem solid #000;
+  border-top: .5rem solid transparent;
+  border-left: .5rem solid transparent;
+  border-right: .5rem solid transparent;
+}
+
+.choices:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* Buttons =================================== */
@@ -153,6 +201,7 @@ section .text-box {
 
   text-align: center;
   padding-bottom: 10rem;
+  user-select: none;
 }
 
 #play-again > button {
@@ -174,11 +223,18 @@ section .text-box {
   opacity: 1;
   visibility: visible;
   
-  transition: all .5s;
+  transition: opacity .5s .5s;
 }
 
 #play-again.show button {
   cursor: pointer;
+
+  transition: transform .2s;
+}
+
+#play-again.show button:hover {
+  background-color: var(--primary-color-hover);
+  transform: scale(1.1);
 }
 
 /* Keyframes =================================== */
