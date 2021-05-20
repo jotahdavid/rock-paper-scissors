@@ -70,13 +70,23 @@ const RockPaperScissors = {
       this.html["choicesContainer"].appendChild(this.choicesBackup[option]);
     });
   },
+  toggleTitle() {
+    document
+      .querySelector("header")
+      .classList.toggle("hidden")
+  },
+  toggleCentralizeChoicesContainer() {
+    document
+      .querySelector("section")
+      .classList.toggle("centralize")
+  },
   showWinner() {
     this.html["textBox"].innerText = this.getWinner().toUpperCase();
     this.html["textBox"].classList.add(this.getWinner());
   },
   showQuestion() {
     this.html["textBox"].innerText = "Which one do you choose?";
-    this.html["textBox"].classList.value = null;
+    this.html["textBox"].classList.value = "";
   },
   showOptionsChosen() {
     const userChoiceElement = this.choicesBackup[this.userChoice];
@@ -95,6 +105,8 @@ const RockPaperScissors = {
     this.html["button"].children[0].onclick = null;
   },
   play(event) {
+    this.toggleTitle();
+    this.toggleCentralizeChoicesContainer();
     this.getComputerChoice();
     this.getUserChoice(event);
     this.showWinner();
@@ -104,6 +116,8 @@ const RockPaperScissors = {
     this.addPlayAgainButton();
   },
   restart() {
+    this.toggleTitle();
+    this.toggleCentralizeChoicesContainer();
     this.removeChilds();
     this.recreateOptions();
     this.showQuestion();
