@@ -375,7 +375,7 @@ section .text-box {
 @keyframes left-to-right {
   from {
     opacity: 0;
-    transform: translateX(-20vw);
+    transform: translateX(-2vw);
   }
   to {
     opacity: 1;
@@ -386,7 +386,7 @@ section .text-box {
 @keyframes right-to-left {
   from {
     opacity: 0;
-    transform: translateX(20vw);
+    transform: translateX(2vw);
   }
   to {
     opacity: 1;
