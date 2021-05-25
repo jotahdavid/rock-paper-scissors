@@ -38,10 +38,9 @@ const RockPaperScissors = {
     this.computerChoice = this.choiceOptions[choice];
   },
   getUserChoice(event) {
-    const elementChosen = event.path.filter(({ dataset }) => dataset && dataset.hasOwnProperty("choice"));
-    const choice = elementChosen[0].dataset.choice;
+    const getDataChoice = event.target.dataset["choice"] || event.target.parentElement.dataset["choice"];
 
-    this.userChoice = choice;
+    this.userChoice = getDataChoice;
   },
   getWinner() {
     if(this.winningCombinations.includes(`${this.userChoice} > ${this.computerChoice}`)) {
