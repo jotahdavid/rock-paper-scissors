@@ -15,10 +15,15 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
 }
 
 body {
-  height: 100vh;
   background-color: var(--bg-color);
   overflow-x: hidden;
 }
@@ -46,7 +51,7 @@ header.hidden {
 
 /* Section =================================== */
 section.centralize {
-  height: 100vh;
+  height: 100%;
 
   display: flex;
   flex-direction: column;

@@ -13,13 +13,11 @@ const RockPaperScissors = {
   addEvents() {
     this.getChoicesElements().forEach(element => {
       element.onclick = this.play.bind(this);
-      element.ontouchend = this.play.bind(this);
     });
   },
   removeEvents() {
     this.getChoicesElements().forEach(element => {
       element.onclick = null;
-      element.ontouchend = null;
     });
   },
   getChoicesBackup() {
@@ -100,15 +98,12 @@ const RockPaperScissors = {
   addPlayAgainButton() {
     this.html["button"].classList.add("show");
     this.html["button"].children[0].onclick = this.restart.bind(this);
-    this.html["button"].children[0].ontouchend = this.restart.bind(this);
   },
   removePlayAgainButton() {
     this.html["button"].classList.remove("show");
     this.html["button"].children[0].onclick = null;
-    this.html["button"].children[0].ontouchend = null;
   },
   play(event) {
-    if(event.type === "touchend") event.preventDefault();
     this.toggleTitle();
     this.toggleCentralizeChoicesContainer();
     this.getComputerChoice();
@@ -120,7 +115,6 @@ const RockPaperScissors = {
     this.addPlayAgainButton();
   },
   restart(event) {
-    if(event.type === "touchend") event.preventDefault();
     this.toggleTitle();
     this.toggleCentralizeChoicesContainer();
     this.removeChilds();
