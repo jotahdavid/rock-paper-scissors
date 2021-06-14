@@ -24,6 +24,7 @@ body, html {
 }
 
 body {
+  height: max(100%, 400px);
   background-color: var(--bg-color);
   overflow-x: hidden;
 }
@@ -214,7 +215,7 @@ section .text-box {
   z-index: 10;
 
   height: 2.5rem;
-  max-width: 8rem;
+  width: 100%;
   margin: 0 auto;
   background-color: #000;
   
@@ -247,9 +248,12 @@ section .text-box {
 #play-again {
   opacity: 0;
   visibility: hidden;
+  position: absolute;
+  bottom: 100%;
 
   text-align: center;
   user-select: none;
+  width: 90%;
 }
 
 #play-again > button {
@@ -272,6 +276,7 @@ section .text-box {
 }
 
 #play-again.show {
+  position: initial;
   opacity: 1;
   visibility: visible;
   transition: opacity .5s .5s;
@@ -289,33 +294,47 @@ section .text-box {
 
 /* Media queries =================================== */
 @media screen and (max-width: 800px) {
-  body {
-    overflow-y: auto;
-  }
   header {
     margin: 0;
   }
   header h1 {
-    font-size: 2.5rem;
+    font-size: min(2.5rem, 8vw);
   }
   .text-box h2 {
-    font-size: 1.6rem;
+    font-size: min(1.6rem, 5vw);
   }
   section.centralize .choices-container {
-    gap: 5rem;
+    gap: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
   .choices-container {
     padding-bottom: 2rem;
     margin-top: 4rem;
-    flex-wrap: wrap;
+    width: 90%;
+    
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
   .choices {
-    margin-bottom: 3.5rem;
+    margin-bottom: 3rem;
     padding: 1rem;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .choices:last-of-type {
+    grid-column: 1 / 3;
   }
   .choices > img {
-    width: 80px;
-    height: 80px;
+    width: min(80px, 16vw);
+    height: min(80px, 16vw);
   }
   .choices.user-choice, .choices.computer-choice {
     margin-left: 20px;
@@ -323,7 +342,7 @@ section .text-box {
   }
   .choices.user-choice::before, .choices.computer-choice::before {
     top: -40px;
-    font-size: 1.6rem;
+    font-size: min(1.6rem, 6vw);
   }
   .choices:hover.user-choice, .choices:hover.computer-choice {
     background-color: var(--primary-color);
@@ -332,13 +351,15 @@ section .text-box {
   .choices span {
     opacity: 1;
     visibility: visible;
+    font-size: min(1.3rem, 3.5vw);
+    height: 2rem;
   }
+  #play-again > button {
+    margin-top: 2rem;
+    font-size: min(1.5rem, 6vw);}
 }
 
 @media screen and (max-width: 500px) {
-  header h1 {
-    font-size: 2rem;
-  }
   .choices-container {
     margin-bottom: 1rem;
   }
@@ -346,11 +367,11 @@ section .text-box {
     margin-bottom: 2rem;
   }
   .choices {
-    margin: 0 1rem;
+    padding: .8rem;
   }
   .choices > img {
-    width: 80px;
-    height: 80px;
+    min-width: 30px;
+    min-height: 30px;
   }
 }
 
@@ -358,22 +379,22 @@ section .text-box {
 @keyframes appear {
   from {
     opacity: 0;
-    transform: scale(0, 0);
+    transform: scale(0);
   }
   to {
     opacity: 1;
-    transform: scale(1, 1);
+    transform: scale(1);
   }
 }
 
 @keyframes appear-and-rotate {
   from {
     opacity: 0;
-    transform: scale(0, 0) rotate(-180deg);
+    transform: scale(0) rotate(-180deg);
   }
   to {
     opacity: 1;
-    transform: scale(1, 1) rotate(0deg);
+    transform: scale(1) rotate(0deg);
   }
 }
 
