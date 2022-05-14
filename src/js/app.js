@@ -4,7 +4,7 @@ const RockPaperScissors = {
     textBox: document.querySelector(".text-box h2"),
     button: document.querySelector("#play-again"),
   },
-  
+
   init() {
     this.addEvents();
   },
@@ -49,7 +49,7 @@ const RockPaperScissors = {
   },
   showWinner(user, comp) {
     const result = this.getMatchRoundResult(user, comp);
-    
+
     this.html["textBox"].innerText = result.toUpperCase();
     this.html["textBox"].classList.add(result);
   },
