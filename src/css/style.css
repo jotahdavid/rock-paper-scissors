@@ -252,7 +252,7 @@ section .text-box {
 }
 
 /* Buttons =================================== */
-#play-again {
+.play-again {
   opacity: 0;
   visibility: hidden;
   position: absolute;
@@ -265,7 +265,7 @@ section .text-box {
   margin-right: auto;
 }
 
-#play-again > button {
+.play-again > button {
   font-size: 1.5rem;
   font-weight: 500;
   text-transform: uppercase;
@@ -280,23 +280,23 @@ section .text-box {
   box-shadow: 0.1rem 0.3rem 5px rgba(0, 0, 0, 0.3);
 }
 
-#play-again > button > i {
+.play-again > button > i {
   letter-spacing: 5px;
 }
 
-#play-again.show {
+.play-again.show {
   position: initial;
   opacity: 1;
   visibility: visible;
   transition: opacity .5s .5s;
 }
 
-#play-again.show button {
+.play-again.show button {
   cursor: pointer;
   transition: transform .2s;
 }
 
-#play-again.show button:hover {
+.play-again.show button:hover {
   background-color: var(--primary-color-hover);
   transform: scale(1.1);
 }
@@ -363,10 +363,10 @@ section .text-box {
     font-size: min(1.3rem, 3.5vw);
     height: 2rem;
   }
-  #play-again {
+  .play-again {
     margin-top: 2rem;
   }
-  #play-again > button {
+  .play-again > button {
     font-size: min(1.5rem, 6vw);}
 }
 

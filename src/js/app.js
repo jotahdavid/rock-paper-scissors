@@ -1,12 +1,10 @@
 import ChoiceButton from './components/ChoiceButton.js';
 
-const RockPaperScissors = {
-  html: {
-    choicesContainer: document.querySelector('.choices-container'),
-    textBox: document.querySelector('.text-box h2'),
-    button: document.querySelector('#play-again'),
-  },
+const $choicesContainer = document.querySelector('.choices-container');
+const $textBox = document.querySelector('.text-box h2');
+const $playAgainButton = document.querySelector('.play-again');
 
+const RockPaperScissors = {
   init() {
     this.recreateOptions();
   },
@@ -17,42 +15,35 @@ const RockPaperScissors = {
     return choiceOptions[choice];
   },
   getUserChoice(event) {
-    const getDataChoice = event.target.dataset['choice'] || event.target.parentElement.dataset['choice'];
-
-    return getDataChoice;
+    return event.currentTarget.dataset['choice'];
   },
   getMatchRoundResult(user, comp) {
     const winningCombinations = [ 'Rock > Scissors', 'Scissors > Paper', 'Paper > Rock' ];
 
-    if(winningCombinations.includes(`${user} > ${comp}`)) {
+    if (winningCombinations.includes(`${user} > ${comp}`)) {
       return 'win';
-    } else if(winningCombinations.includes(`${comp} > ${user}`)) {
+    } else if (winningCombinations.includes(`${comp} > ${user}`)) {
       return 'lose';
     }
     return 'draw';
   },
   clearChoicesContainer() {
-    this.html['choicesContainer'].innerHTML = '';
+   $choicesContainer.innerHTML = null;
   },
-  toggleTitle() {
-    document
-      .querySelector('header')
-      .classList.toggle('hidden')
+  showTitle(value) {
+    document.querySelector('.title').classList.toggle('hidden', value);
   },
-  toggleCentralizeChoicesContainer() {
-    document
-      .querySelector('section')
-      .classList.toggle('centralize')
+  centralizeChoicesContainer(value) {
+    document.querySelector('section').classList.toggle('centralize', value);
   },
   showWinner(user, comp) {
     const result = this.getMatchRoundResult(user, comp);
-
-    this.html['textBox'].innerText = result.toUpperCase();
-    this.html['textBox'].classList.add(result);
+    $textBox.innerText = result.toUpperCase();
+    $textBox.classList.add(result);
   },
   showQuestion() {
-    this.html['textBox'].innerText = 'Which one do you choose?';
-    this.html['textBox'].classList.value = '';
+    $textBox.innerText = 'Which one do you choose?';
+    $textBox.classList.value = '';
   },
   showOptionsChosen(user, comp) {
     this.clearChoicesContainer();
@@ -68,43 +59,40 @@ const RockPaperScissors = {
       playerClass: 'computer-choice'
     });
 
-    this.html['choicesContainer'].appendChild(userChoiceElement);
-    this.html['choicesContainer'].appendChild(computerChoiceElement);
+    $choicesContainer.appendChild(userChoiceElement);
+    $choicesContainer.appendChild(computerChoiceElement);
   },
   recreateOptions() {
     this.clearChoicesContainer();
 
-    const handleChoiceClick = (event) => {
-      this.play(event);
-    }
-    this.html['choicesContainer'].appendChild(ChoiceButton({ value: 'Rock', onClick: handleChoiceClick }));
-    this.html['choicesContainer'].appendChild(ChoiceButton({ value: 'Paper', onClick: handleChoiceClick }));
-    this.html['choicesContainer'].appendChild(ChoiceButton({ value: 'Scissors', onClick: handleChoiceClick }));
+    const handleChoiceClick = (event) => this.play(event);
+    $choicesContainer.appendChild(ChoiceButton({ value: 'Rock', onClick: handleChoiceClick }));
+    $choicesContainer.appendChild(ChoiceButton({ value: 'Paper', onClick: handleChoiceClick }));
+    $choicesContainer.appendChild(ChoiceButton({ value: 'Scissors', onClick: handleChoiceClick }));
   },
-  showPlayAgainButton() {
-    this.html['button'].classList.add('show');
-    this.html['button']
-      .children[0]
-      .addEventListener('click', this.restart.bind(this), { once: true });
-  },
-  hidePlayAgainButton() {
-    this.html['button'].classList.remove('show');
+  showPlayAgainButton(value) {
+    $playAgainButton.classList.toggle('show', value);
+
+    if (!value) return;
+
+    const handlePlayAgainButtonClick = () => this.restart();
+    $playAgainButton.children[0].addEventListener('click', handlePlayAgainButtonClick, { once: true });
   },
   play(event) {
-    this.toggleTitle();
-    this.toggleCentralizeChoicesContainer();
+    this.showTitle(true);
+    this.centralizeChoicesContainer(true);
     const compChoice = this.getComputerChoice();
     const userChoice = this.getUserChoice(event);
     this.showWinner(userChoice, compChoice);
     this.showOptionsChosen(userChoice, compChoice);
-    this.showPlayAgainButton();
+    this.showPlayAgainButton(true);
   },
   restart() {
-    this.toggleTitle();
-    this.toggleCentralizeChoicesContainer();
+    this.showTitle(false);
+    this.centralizeChoicesContainer(false);
     this.recreateOptions();
     this.showQuestion();
-    this.hidePlayAgainButton();
+    this.showPlayAgainButton(false);
   },
 }
 
