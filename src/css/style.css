@@ -41,7 +41,7 @@ header h1 {
   margin: 0 auto;
   padding: .5rem;
 
-  font-size: 3rem;
+  font-size: min(3rem, 8vh);
   font-weight: 300;
   text-align: center;
   text-transform: uppercase;
@@ -80,7 +80,7 @@ section .text-box {
 }
 
 .text-box h2 {
-  font-size: 2rem;
+  font-size: min(2rem, 5vh);
   font-weight: 500;
   text-transform: uppercase;
   text-align: center;
@@ -90,6 +90,7 @@ section .text-box {
   background-color: var(--primary-color);
   border-radius: 10px;
   max-width: 600px;
+  width: 100vh;
   margin: 0 auto;
   padding: 5px;
 
@@ -119,8 +120,8 @@ section .text-box {
 
   margin-left: auto;
   margin-right: auto;
-  margin-top: 8rem;
-  padding-bottom: 8rem;
+  margin-top: min(8rem, 12vh);
+  padding-bottom: min(8rem, 12vh);
 
   display: flex;
   justify-content: center;
@@ -135,7 +136,7 @@ section .text-box {
   cursor: pointer;
   user-select: none;
 
-  padding: 2rem;
+  padding: min(2rem, 3vw);
   border-radius: 50%;
   background-color: var(--primary-color);
 
@@ -208,6 +209,11 @@ section .text-box {
 
 .choices[data-animation=right-to-left] {
   animation: right-to-left 600ms;
+}
+
+.choices > img {
+  width: min(6rem, 16vw);
+  height: min(6rem, 16vw);
 }
 
 /* Tooltip =================================== */
