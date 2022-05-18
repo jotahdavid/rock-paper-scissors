@@ -90,7 +90,6 @@ section .text-box {
   background-color: var(--primary-color);
   border-radius: 10px;
   max-width: 600px;
-  width: 100vh;
   margin: 0 auto;
   padding: 5px;
 

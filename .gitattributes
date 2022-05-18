@@ -1,5 +1,1 @@
 *.css linguist-detectable=false
-src/images/favicon.png filter=lfs diff=lfs merge=lfs -text
-src/images/emoji/paper.png filter=lfs diff=lfs merge=lfs -text
-src/images/emoji/rock.png filter=lfs diff=lfs merge=lfs -text
-src/images/emoji/scissors.png filter=lfs diff=lfs merge=lfs -text
